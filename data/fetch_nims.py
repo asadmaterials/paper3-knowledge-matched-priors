@@ -4,7 +4,7 @@ Source: https://github.com/qq-shu/Fatigue-Dataset (commit a2e3d7e, Dec 2020),
 a copy of the dataset released with Agrawal et al., Integrating Materials and
 Manufacturing Innovation 3, 8 (2014), doi:10.1186/2193-9772-3-8 (CC BY 2.0).
 
-Usage: python data/fetch_nims.py
+Usage: python -m data.fetch_nims   (from the repo root)
 """
 import hashlib
 import pathlib
@@ -19,10 +19,12 @@ OUT = pathlib.Path(__file__).parent / "raw" / "Fatigue-Dataset.csv"
 def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     if not OUT.exists():
-        urllib.request.urlretrieve(URL, OUT)
+        with urllib.request.urlopen(URL, timeout=60) as resp:
+            OUT.write_bytes(resp.read())
     digest = hashlib.sha256(OUT.read_bytes()).hexdigest()
     if digest != SHA256:
-        raise SystemExit(f"Checksum mismatch: {digest} != {SHA256}")
+        OUT.unlink()  # remove a partial or wrong file so the next run retries
+        raise SystemExit(f"Checksum mismatch: {digest} != {SHA256}; file removed")
     print(f"OK {OUT} sha256={digest}")
 
 

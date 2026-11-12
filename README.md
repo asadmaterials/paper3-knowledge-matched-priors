@@ -18,11 +18,14 @@ env/        pinned requirements
 
 ```
 pip install -r env/requirements.txt
-python data/fetch_nims.py
-python data/clean_nims.py
+python -m data.fetch_nims
+python -m data.clean_nims
 ```
+
+Run all scripts from the repo root with `python -m`, so that `data`, `prior`, `llm`, `bo` and `analysis` import as packages. Requirements use lower bounds for now; exact versions are pinned at the preregistration freeze.
 
 ## Status
 
 - Week 1 (3 to 9 Nov 2026): data obtained, checksummed, cleaned; data card written.
 - 3 Nov 2026: primary pool set to the 378 QT rows (all top-1% and top-5% rows of the full pool are carburized). Codified prior spec v0.1 drafted in `prior/SPEC.md`; coefficients pending the original GHP 1977 source.
+- 12 Nov 2026: review rounds 1 and 2 addressed; spec v0.2 (direct GHP table lookup at 1 h, plateau instead of cap, Gate A against heuristic references and within-TT skill); decision log started in `prior/DECISION_LOG.md`.

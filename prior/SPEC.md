@@ -1,6 +1,6 @@
 # Codified metallurgical prior: specification v0.1 (draft)
 
-Status: draft, 3 November 2026. To be frozen before Gate A (30 November 2026). No coefficient may be coded until its row in the source table below is marked "verified against original".
+Status: draft v0.2, 3 November 2026, updated 12 November 2026. To be frozen before Gate A (30 November 2026). No coefficient may be coded until its row in the source table below is marked "verified against original". Every change after 12 November is recorded in `prior/DECISION_LOG.md`, with what had been seen of the QT targets at the time.
 
 ## 1. Scope
 
@@ -33,7 +33,11 @@ The prior predicts fatigue strength in two steps. It does not compute as-quenche
 
 ### Step 1: tempered martensite hardness (Grange, Hribal and Porter 1977)
 
-GHP estimate the hardness of tempered martensite as a carbon-dependent base hardness plus additive increments for each alloying element, both functions of the tempering parameter. Their parameter, as reproduced in secondary sources, is:
+GHP estimate the hardness of tempered martensite as a carbon-dependent base hardness plus additive increments for each alloying element, tabulated for 1 h tempers at fixed temperatures (reported as 204 to 704 °C, which covers the QT range of 420 to 680 °C; to confirm from the original).
+
+**Primary rule:** because every QT row is tempered for exactly 1 h, the prior reads the GHP tables directly at the row's tempering temperature, interpolating linearly in temperature between tabulated steps. The tempering parameter is not needed for the QT pool. This avoids the unresolved discrepancy in the secondary source (section 4).
+
+**Cross-check only:** the GHP tempering parameter, as reproduced in secondary sources, is:
 
 ```latex
 P = (T_{F} + 460)\,(18 + \log_{10} t_{h}) \times 10^{-3}
@@ -62,7 +66,7 @@ No hardness-to-tensile-strength step is used, which removes one approximate conv
 ### Output and range handling
 
 - Prior score: s(x) = σw from step 2, in MPa.
-- Hardness above 450 HV: σw is computed as written, and the row is flagged. The count of flagged rows is reported. (Threshold within the 400 to 500 HV range of the source; to be fixed when the hardness range of the pool is known.)
+- High hardness: a hard cap is not used, because it would give the top rows tied scores, and those rows decide the endpoint. Instead σw follows a monotone plateau above the linear range. **The plateau form and its source must be fixed in this file before any Gate A correlation is computed.** Gate A reports ρ with and without the plateau, and the number of QT rows above the linear range.
 - Composition outside the GHP validity ranges: inputs are clipped to the edge of the range and the row is flagged. Counts are reported per element.
 - Through-hardening temperature and THQCr are not used in v0.1 (full martensite is assumed). See section 6.
 
@@ -82,7 +86,7 @@ In the BO comparison, every prior enters as m(x) = a + b·s(x), with a and b fit
 
 ## 6. Known limitations of v0.1
 
-- **Hardenability.** GHP assume full martensite before tempering. Low-hardenability plain-carbon steels quenched as bars may not reach full martensite, so the prior will overestimate their hardness. A hardenability correction (for example, an ideal-critical-diameter check against specimen size) is a candidate for v0.2, if the NIMS specimen and bar sizes can be found.
+- **Hardenability (now a likely core issue, see DECISION_LOG entry 2).** GHP assume full martensite before tempering. Low-hardenability plain-carbon steels quenched as bars may not reach full martensite, so the prior will overestimate their hardness. Within each tempering temperature in the QT pool, fatigue rises with Cr and Mo and falls slightly with C. A carbon-dominated GHP prior with no hardenability term may therefore rank rows wrongly within a tempering temperature. A hardenability correction (for example, ideal critical diameter from composition, checked against specimen or bar size) must be decided on metallurgical grounds and sourced before Gate A, not tuned to the QT targets.
 - **Silicon spring steels.** The 12 rows with Si of 1.31 wt% or more may fall outside the GHP silicon range. They are among the strongest rows in the QT pool (fatigue up to 906 MPa), so how they are handled affects the top of the ranking.
 - **Inclusions and upstream processing.** The fatigue relation ignores inclusion size, which the source says controls fatigue at high hardness. Inclusion data exist in the original file but not in this copy.
 - **High-carbon rows.** 51 rows have C above 0.5 wt%. Whether they are inside the GHP carbon range is to be checked.
@@ -96,8 +100,12 @@ In the BO comparison, every prior enters as m(x) = a + b·s(x), with a and b fit
 
 1. **Independent check of step 1:** compare GHP predictions with published hardness of tempered steels not from NIMS (for example, handbook tempering curves for 1045, 4140 and 4340 after a 1 h temper). Report error in HV.
 2. **Independent check of step 2:** compare 1.6 HV with published fatigue limits and hardness pairs from sources other than NIMS.
-3. **NIMS QT prior quality:** Spearman ρ between the unfitted prior and measured fatigue, overall, within each tempering temperature, and with the spring-steel rows excluded. Counts reported for every subset.
-4. **Gate A thresholds** (from the research plan): ρ ≥ 0.4 GO; 0.2 to 0.4 adjust; below 0.2 reframe.
+3. **NIMS QT prior quality:** Spearman ρ between the unfitted prior and measured fatigue, overall, within each tempering temperature with at least 20 rows (550, 580, 600, 630, 650, 680 °C), and with the spring-steel rows excluded. Counts reported for every subset.
+4. **Heuristic reference priors**, computed and reported beside the codified prior: s = −TT (ρ = 0.51 on QT) and s = C·(700 − TT) (ρ = 0.46). These show what tempering temperature alone achieves.
+5. **Gate A criteria (proposed, to freeze before any codified-prior correlation is computed):**
+    - GO requires all of: overall ρ ≥ 0.4; overall ρ above the better heuristic reference (0.51); and median within-TT ρ ≥ 0.2, since within a tempering temperature is where metallurgy beyond TT shows.
+    - Adjust: overall ρ ≥ 0.2 but any GO criterion fails. The paper then reports that the codified prior adds nothing beyond tempering temperature, and the decision on the confirmatory pool (DECISION_LOG entry 3) is revisited.
+    - Reframe: overall ρ below 0.2.
 
 ## 9. Open items for Asad
 

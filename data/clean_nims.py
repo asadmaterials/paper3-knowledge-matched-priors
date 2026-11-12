@@ -9,14 +9,14 @@ Routes (from which steps are present):
   QT : normalized, through-hardened, quenched and tempered (THT > 30)
   C  : normalized, carburized, quenched and tempered (CT > 30)
 
-Usage: python data/clean_nims.py
+Usage: python -m data.clean_nims   (from the repo root)
 """
 import pathlib
 
 import numpy as np
 import pandas as pd
 
-from sentinels import step_flags
+from data.sentinels import step_flags
 
 HERE = pathlib.Path(__file__).parent
 RAW = HERE / "raw" / "Fatigue-Dataset.csv"

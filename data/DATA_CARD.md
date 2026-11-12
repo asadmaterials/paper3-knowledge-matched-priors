@@ -1,6 +1,6 @@
 # Data card: NIMS steel fatigue dataset
 
-Checked 3 November 2026.
+Checked 3 November 2026. Updated 12 November 2026.
 
 ## Source
 
@@ -35,7 +35,7 @@ Rows coded as skipped, per column. The codes are consistent within each step (te
 | Carburizing | CT, Ct, DT, Dt, QmT | 389 | 378 |
 | Tempering | TT, Tt, TCr | 11 | 0 |
 
-Handling rule, used by every arm (`data/sentinels.py`): the codified prior branches on step flags, never on raw temperatures; LLM prompts and LLM-written formulas see a skipped step as "not performed"; the GP drops columns that are constant on the pool and, for steps skipped in only some rows, adds a 0/1 "step performed" flag and fills the code with the median of the performed rows. On the QT pool the carburizing columns, Tt (always 60 min) and TCr (always 24) are constant and are dropped from the GP inputs.
+Handling rule, used by every arm (`data/sentinels.py`): the codified prior branches on step flags, never on raw temperatures; LLM prompts and LLM-written formulas see a skipped step as "not performed"; the GP drops columns that are constant on the pool and, for steps skipped in only some rows, adds a 0/1 "step performed" flag and fills the code with the median of the performed rows. On the QT pool the carburizing columns, THt (always 30 min), Tt (always 60 min) and TCr (always 24) are constant and are dropped from the GP inputs. Note that THt = 30 is a real time of 30 min, not the temperature skip code 30.
 
 ## Processing routes
 
@@ -57,8 +57,8 @@ Within QT, tempering time is 60 min for every row (zero variance, asserted in `c
 ## Open items
 
 - [ ] Download Additional file 1 from the journal page by hand and diff it against this copy column by column (names, units, values, row order, skip encoding), and record the result here.
-- [ ] Find the units of THQCr and TCr (values 0, 8, 24 and 0, 0.5, 24). Until found, decide one rule for both LLM arms: omit the columns, or pass them as a unitless code. In the QT pool only THQCr varies (8 or 24).
-- [ ] Confirm redistribution terms for the NIMS-derived data. Until confirmed, data/raw/ and data/processed/ stay out of git; only the fetch script, checksum and this card are published.
+- [ ] Find the units of THQCr and TCr (values 0, 8, 24 and 0, 0.5, 24). Rule decided 12 Nov 2026 (prior/DECISION_LOG.md, entry 4): both LLM arms receive THQCr as a unitless code. In the QT pool only THQCr varies (8 or 24).
+- [ ] Confirm redistribution terms for the NIMS-derived data. Check first whether Additional file 1 is covered by the article's CC BY 2.0 licence; if so, redistribution with attribution may already be allowed, independent of the NIMS MatNavi terms for the underlying sheets. Until confirmed, data/raw/ and data/processed/ stay out of git; only the fetch script, checksum and this card are published.
 
 ## Design implication (see README)
 
