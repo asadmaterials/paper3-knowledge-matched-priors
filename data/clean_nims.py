@@ -46,6 +46,18 @@ def assign_route(df: pd.DataFrame) -> pd.Series:
                      index=df.index, name="route")
 
 
+STEEL_KEY = COMPOSITION + ["NT", "THT", "THt", "THQCr", "CT", "Ct", "DT", "Dt", "QmT"]
+
+
+def assign_steel(df: pd.DataFrame) -> pd.Series:
+    """One id per steel: same composition and pre-temper processing.
+
+    Rows of one steel differ only in tempering. Use steel_id to resample
+    steels, not rows, in any bootstrap.
+    """
+    return df.groupby(STEEL_KEY, sort=False).ngroup().rename("steel_id")
+
+
 def check_qt(df: pd.DataFrame) -> None:
     """Facts the QT-pool design relies on. Fail loudly if the data change."""
     qt = df[df["route"] == "QT"]
@@ -55,6 +67,10 @@ def check_qt(df: pd.DataFrame) -> None:
         raise SystemExit("Tempering time is not 60 min for every QT row")
     if not step_flags(qt)["tempering_done"].all():
         raise SystemExit("A QT row has no tempering step")
+    if qt["steel_id"].nunique() != 132:
+        raise SystemExit("QT pool is not 132 steels")
+    if qt.duplicated(["steel_id", "TT"]).any():
+        raise SystemExit("A QT steel appears twice at one tempering temperature")
 
 
 def main() -> None:
@@ -68,9 +84,11 @@ def main() -> None:
     df = df.copy()
     df.insert(0, "row_id", np.arange(len(df)))
     df["route"] = assign_route(df)
+    df["steel_id"] = assign_steel(df)
     check_qt(df)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    df[["row_id", "route"] + COMPOSITION + PROCESS + [TARGET]].to_csv(OUT, index=False)
+    cols = ["row_id", "steel_id", "route"] + COMPOSITION + PROCESS + [TARGET]
+    df[cols].to_csv(OUT, index=False)
     print(f"Wrote {OUT}: {len(df)} rows")
     print(df["route"].value_counts().to_string())
 

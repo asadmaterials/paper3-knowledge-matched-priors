@@ -47,6 +47,20 @@ Handling rule, used by every arm (`data/sentinels.py`): the codified prior branc
 
 Within QT, tempering time is 60 min for every row (zero variance, asserted in `clean_nims.py`), so the tempering parameter varies only through tempering temperature (420 to 680 °C). Through-hardening temperature takes four values (825 to 865 °C).
 
+## Steel structure of the QT pool
+
+The 378 QT rows are 132 steels, not 378 independent samples. A steel is one composition with one normalizing, through-hardening and quench condition (`steel_id` in the cleaned file); its rows differ only in tempering temperature. The 132 compositions are all distinct.
+
+| Cohort | Steels | Tempering temperatures (°C) | Rows |
+| --- | --- | --- | --- |
+| Main design | 100 | 550, 600, 650 | 300 |
+| Second design | 20 | 580, 630, 680 | 60 |
+| Low-temper steels | 12 | 6 at 420 and 490, or 430 and 500; 6 at 430 or 500 alone | 18 |
+
+- The 12 low-temper steels appear at no tempering temperature of 550 °C or above. They include the 9 silicon spring-steel compositions (12 rows).
+- No steel appears twice at one tempering temperature.
+- Consequences: any interval on a correlation or BO outcome resamples steels (effective n about 132), not rows; within-TT correlations in the main design are the same 100 steels measured three times; in BO, querying one row is informative about the steel's other rows.
+
 ## Differences from the published description
 
 - The paper describes 25 features. This copy has 21. The four absent are RedRatio (reduction ratio, ingot to bar) and the inclusion area fractions dA (deformed by plastic work), dB (discontinuous arrays) and dC (isolated), per Table 1 as reproduced in Kookalani et al. (ISARC 2025). No arm sees them, so they create no input asymmetry between arms. If Additional file 1 becomes the source of record, this must be revisited.

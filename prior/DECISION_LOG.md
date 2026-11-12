@@ -6,7 +6,7 @@ Every design decision, with the date and what had been seen of the QT fatigue ta
 
 - Decision: the 378 QT rows are the confirmatory pool; the full 437-row pool is secondary.
 - Reason: every row in the top 1% and top 5% of the full pool is carburized, so the full pool mainly tests route identification.
-- Seen: route counts and fatigue ranges per route; Spearman of TT with fatigue on QT (−0.51).
+- Seen on 3 Nov, in the data profiling for this decision: route counts and fatigue ranges per route; Spearman of TT with fatigue on QT (−0.51, reported to Asad in chat on 3 Nov); Spearman of C with fatigue on QT (computed; value not retained); the 10 highest-fatigue QT rows with their composition, through-hardening and tempering conditions; the count of QT rows with Si above 1.0 wt% (12); the QT composition and TT ranges in SPEC section 2.
 
 ## Entry 2, 12 Nov 2026: what the QT targets show (review round 2, N1)
 
@@ -16,7 +16,7 @@ Seen, and checked independently in this repo:
 - The next tempering temperature is 550 °C, where the maximum fatigue is 638 MPa. The maximum over TT ≥ 550 °C is 643 MPa, at 580 °C.
 - Heuristic priors on QT: s = −TT gives ρ = 0.51; s = C·(700 − TT) gives ρ = 0.46. Both pass the original Gate A GO threshold of 0.4.
 - With n₀ = 10, P(the initial design contains at least one TT ≤ 500 °C row) = 0.39.
-- Within each tempering temperature with 100 rows (550, 600, 650 °C): ρ(Cr, fatigue) ≈ 0.83, ρ(Mo, fatigue) 0.66 to 0.72, ρ(Mn + Ni + Cr + Mo, fatigue) 0.76 to 0.82, ρ(C, fatigue) −0.08 to −0.14. C and total alloy content are anticorrelated (ρ = −0.42). Across all six tempering temperatures with at least 20 rows, ρ(C, fatigue) ranges from −0.06 to −0.23.
+- Within each tempering temperature with 100 rows (550, 600, 650 °C): ρ(Cr, fatigue) ≈ 0.83, ρ(Mo, fatigue) 0.66 to 0.72, ρ(Mn + Ni + Cr + Mo, fatigue) 0.76 to 0.82, ρ(C, fatigue) −0.08 to −0.14. C and total alloy content (Mn + Ni + Cr + Mo, wt%) are anticorrelated: Spearman ρ = −0.42 within the 100-steel cohort at any one of its tempering temperatures, −0.37 at steel level, −0.34 on all QT rows (corrected 12 Nov; first recorded without the subset). Across all six tempering temperatures with at least 20 rows, ρ(C, fatigue) ranges from −0.06 to −0.23.
 
 Consequences:
 
@@ -33,7 +33,14 @@ To decide before the preregistration (14 Dec 2026), among:
 
 Whichever is chosen, report per seed whether D₀ contains a TT ≤ 500 °C row, and break results down by it.
 
+Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that appear at no tempering temperature of 550 °C or above, a separate sub-campaign from the 100-steel and 20-steel designs. This strengthens option 2: TT ≥ 550 °C is a clean 120-steel design with three tempering temperatures per steel. Whichever option is chosen, report a steel-level success measure as secondary (a hit is any row of a top-k steel), and state in the paper that one query is informative about a steel's other rows.
+
 ## Entry 4, 12 Nov 2026: THQCr in the LLM arms
 
 - Decision: both LLM arms (A3, A4) receive THQCr as a unitless code ("cooling-rate code 8" or "24"), since its unit is not stated in any source found and it varies in the QT pool. Omitting it would give the GP an input the LLM arms lack.
-- Reversible until the preregistration.
+- Reversible until the preregistration. The exact prompt string will live in `llm/prompts/` so the preregistration can point to it.
+
+## Entry 5, 12 Nov 2026: unequal exposure to the targets (review round 3, R2)
+
+- The designer of the codified prior has now seen QT target statistics (entries 1 and 2), including that Cr and Mo drive fatigue within a tempering temperature. The LLM arms have not. This could favour the codified prior (A2) over the LLM arms (A3, A4).
+- Mitigations: the hardenability rule family and its source are written into SPEC section 3 before any codified-prior correlation is computed; the non-NIMS validation (SPEC section 8.1) is the main evidence that the rule is right; in the paper, the Gate A correlations are described as unblinded, only the BO comparison is confirmatory, and this exposure and its likely direction are stated.
