@@ -69,6 +69,8 @@ def check_qt(df: pd.DataFrame) -> None:
         raise SystemExit("A QT row has no tempering step")
     if qt["steel_id"].nunique() != 132:
         raise SystemExit("QT pool is not 132 steels")
+    if df["steel_id"].nunique() != 179:
+        raise SystemExit("Full pool is not 179 steels")
     if qt.duplicated(["steel_id", "TT"]).any():
         raise SystemExit("A QT steel appears twice at one tempering temperature")
 

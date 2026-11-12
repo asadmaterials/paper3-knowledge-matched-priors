@@ -39,8 +39,15 @@ Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that app
 
 - Decision: both LLM arms (A3, A4) receive THQCr as a unitless code ("cooling-rate code 8" or "24"), since its unit is not stated in any source found and it varies in the QT pool. Omitting it would give the GP an input the LLM arms lack.
 - Reversible until the preregistration. The exact prompt string will live in `llm/prompts/` so the preregistration can point to it.
+- Updated 12 Nov (review round 4, R6): all arms get the same wording for THQCr. Until the NIMS sheets confirm what it encodes, the LLM arms see "cooling-rate code 8" or "24" and the codified prior does not use it. If the sheets confirm a quench medium, every arm sees that medium by name (for example "oil quench", "water quench"), and the codified prior may use it for quench severity.
 
 ## Entry 5, 12 Nov 2026: unequal exposure to the targets (review round 3, R2)
 
 - The designer of the codified prior has now seen QT target statistics (entries 1 and 2), including that Cr and Mo drive fatigue within a tempering temperature. The LLM arms have not. This could favour the codified prior (A2) over the LLM arms (A3, A4).
 - Mitigations: the hardenability rule family and its source are written into SPEC section 3 before any codified-prior correlation is computed; the non-NIMS validation (SPEC section 8.1) is the main evidence that the rule is right; in the paper, the Gate A correlations are described as unblinded, only the BO comparison is confirmatory, and this exposure and its likely direction are stated.
+
+## Entry 6, 12 Nov 2026: THQCr and steel type (inputs only, review round 4, R6)
+
+- Seen, from inputs only (no target values): THQCr is constant within every QT steel. Of the 132 QT steels, all 34 with THQCr = 24 are plain carbon (Cr < 0.3, Mo < 0.05 and Ni < 0.3 wt%); THQCr = 8 covers 76 alloy steels and 22 plain-carbon steels.
+- Hypothesis, not confirmed: 24 and 8 encode water and oil quenching, matching common practice. To be checked against the NIMS fatigue data sheets.
+- Adds no exposure to the targets.
