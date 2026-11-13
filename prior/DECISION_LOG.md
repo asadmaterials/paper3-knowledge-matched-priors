@@ -51,3 +51,9 @@ Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that app
 - Seen, from inputs only (no target values): THQCr is constant within every QT steel. Of the 132 QT steels, all 34 with THQCr = 24 are plain carbon (Cr < 0.3, Mo < 0.05 and Ni < 0.3 wt%); THQCr = 8 covers 76 alloy steels and 22 plain-carbon steels.
 - Hypothesis, not confirmed: 24 and 8 encode water and oil quenching, matching common practice. To be checked against the NIMS fatigue data sheets.
 - Adds no exposure to the targets.
+
+## Entry 7, 13 Nov 2026: grades, source ranges and SNCM447 molybdenum (inputs only)
+
+- Seen, from inputs only (no target values): the inferred JIS grade of each QT steel (data/DATA_CARD.md); THQCr = 24 in exactly the 34 plain-carbon S-C steels and 8 in all 98 alloy and spring steels; the 6 SNCM447 steels have Mo = 0.00; counts of QT steels above the GHP tested composition levels (Si 9, Ni 30, Cr 75; 79 steels in all) and outside the A255 calculation range (40 steels).
+- Verified from the original GHP paper: the method is graphical (Fig. 7 and Figs. 8 to 17), hardness is HV, and the tempering-parameter form in SPEC section 3 is correct.
+- Adds no exposure to the targets.

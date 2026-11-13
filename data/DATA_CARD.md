@@ -61,6 +61,32 @@ The 378 QT rows are 132 steels, not 378 independent samples. A steel is one comp
 - No steel appears twice at one tempering temperature.
 - Consequences: any interval on a correlation or BO outcome resamples steels (effective n about 132), not rows; within-TT correlations in the main design are the same 100 steels measured three times; in BO, querying one row is informative about the steel's other rows.
 
+## Likely JIS grades and NIMS data sheets (inferred from composition, 13 Nov 2026)
+
+The file has no grade label. Grades below are inferred from composition and processing (inputs only) and matched to the room-temperature data sheets in the NIMS catalogue (Furuya et al., Sci. Technol. Adv. Mater. 20 (2019) 1055, Table 1). To confirm against the heat lists in the sheets.
+
+| Inferred grade | QT steels | THQCr | TT (°C) | Data sheet No. (DOI 10.11503/nims.…) |
+| --- | --- | --- | --- | --- |
+| S35C, S45C, S55C (C 0.32 to 0.57) | 34 | 24 | 550/600/650; some 580/630/680 | 2 (1066), 3 (1067), 4 (1068) |
+| SCr440 | 8 | 8 | 550/600/650 | 8 (1072) |
+| SCM435, SCM440 | 29 | 8 | 550/600/650 | 9 (1073), 10 (1074) |
+| SMn438, SMn443 | 19 | 8 | 550/600/650 | 16 (1080), 17 (1081) |
+| SNC631 | 10 | 8 | 550/600/650 | 24 (1088) |
+| SNCM439 | 14 | 8 | 580/630/680 | 25 (1089) |
+| SNCM447 | 6 | 8 | 580/630/680 | 26 (1090) |
+| SUP7 (Si-Mn spring) | 3 | 8 | 430 and 500 | 59 (1123) |
+| SUP9A (Mn-Cr spring) | 3 | 8 | 420 and 490 | 60 (1124) |
+| SUP12 (Si-Cr spring) | 6 | 8 | 430 or 500 | 63 (1127) |
+
+Outside QT: the 11 normalized steels match S25C (sheet 1, DOI 1065); the 36 carburized steels match SCr420, SCM420, SNCM220 and SNCM420 (sheets 37, 43, 50, 51). Sheet 0 (DOI 1064) explains the project, including the common test procedure.
+
+On this inference, THQCr = 24 occurs in exactly the plain-carbon S-C grades and THQCr = 8 in every alloy and spring grade, including the plain-carbon-like SMn and SUP7 grades. This fits water against oil quenching by grade (to confirm from the sheets).
+
+## Suspected missing values coded as 0
+
+- **Mo in SNCM447:** the 6 steels inferred as SNCM447 all have Mo = 0.00, although the grade specifies about 0.15 to 0.30 wt% Mo and the 14 SNCM439 steels have Mo 0.16 to 0.24. Probably not reported, then coded 0. To check against sheet 26.
+- **Mo in other grades:** 82 QT steels and all 11 normalized steels have Mo = 0. These are grades with no Mo specification, so 0 may mean "not analysed" rather than measured zero. The effect on any prior is small at residual levels, but the LLM arms will see "Mo 0.00" as a fact.
+
 ## Differences from the published description
 
 - The paper describes 25 features. This copy has 21. The four absent are RedRatio (reduction ratio, ingot to bar) and the inclusion area fractions dA (deformed by plastic work), dB (discontinuous arrays) and dC (isolated), per Table 1 as reproduced in Kookalani et al. (ISARC 2025). No arm sees them, so they create no input asymmetry between arms. If Additional file 1 becomes the source of record, this must be revisited.
