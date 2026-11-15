@@ -48,12 +48,23 @@ def step_columns(step: str) -> list[str]:
     return [tcol] + others
 
 
+# Through-hardening quench medium, confirmed for the structural steels by
+# NRIM SR-93-02 Table 3 (WQ for S35C/S45C/S55C, OQ for the alloy grades).
+# All arms see the medium by name (DECISION_LOG entry 4).
+QUENCH_MEDIUM = {24: "water quench", 8: "oil quench"}
+
+
 def prompt_value(df: pd.DataFrame, row: int, col: str) -> str:
-    """Value of `col` for an LLM prompt, with skipped steps as 'not performed'."""
+    """Value of `col` for an LLM prompt.
+
+    Skipped steps read 'not performed'; THQCr reads as the quench medium.
+    """
     for step, (tcol, others) in STEPS.items():
         if col == tcol or col in others:
             if df.at[row, tcol] == SENTINEL_TEMP:
                 return "not performed"
+    if col == "THQCr":
+        return QUENCH_MEDIUM[int(df.at[row, col])]
     return str(df.at[row, col])
 
 

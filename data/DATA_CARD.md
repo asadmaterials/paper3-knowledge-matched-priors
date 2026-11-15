@@ -17,9 +17,9 @@ Checked 3 November 2026. Updated 12 November 2026.
 | --- | --- | --- |
 | Composition | C, Si, Mn, P, S, Ni, Cr, Cu, Mo | wt% |
 | Normalizing | NT | °C |
-| Through hardening | THT, THt, THQCr | °C, min, cooling rate (unit not stated) |
+| Through hardening | THT, THt, THQCr | °C, min, quench code (24 = water quench, 8 = oil quench; NRIM SR-93-02 Table 3) |
 | Carburizing | CT, Ct, DT, Dt, QmT | °C, min, °C, min, °C |
-| Tempering | TT, Tt, TCr | °C, min, cooling rate (unit not stated) |
+| Tempering | TT, Tt, TCr | °C, min, cooling code (24 = water cooled after tempering, for the QT steels; NRIM SR-93-02 Table 3) |
 | Target | Fatigue | MPa, rotating bending, 10^7 cycles |
 
 A step that was not performed has temperature 30 and time and cooling rate 0.
@@ -55,15 +55,17 @@ The 378 QT rows are 132 steels, not 378 independent samples. A steel is one comp
 | --- | --- | --- | --- |
 | Main design | 100 | 550, 600, 650 | 300 |
 | Second design | 20 | 580, 630, 680 | 60 |
+
+The second design is one grade family: exactly the SNCM439 (14) and SNCM447 (6) steels, all with Ni 1.62 to 1.92 wt%, above GHP's tested nickel level, so this cohort depends entirely on the nickel extension in the prior (SPEC section 3).
 | Low-temper steels | 12 | 6 at 420 and 490, or 430 and 500; 6 at 430 or 500 alone | 18 |
 
 - The 12 low-temper steels appear at no tempering temperature of 550 °C or above. They include the 9 silicon spring-steel compositions (12 rows).
 - No steel appears twice at one tempering temperature.
 - Consequences: any interval on a correlation or BO outcome resamples steels (effective n about 132), not rows; within-TT correlations in the main design are the same 100 steels measured three times; in BO, querying one row is informative about the steel's other rows.
 
-## Likely JIS grades and NIMS data sheets (inferred from composition, 13 Nov 2026)
+## JIS grades and NIMS data sheets (inferred 13 Nov 2026, confirmed 15 Nov 2026)
 
-The file has no grade label. Grades below are inferred from composition and processing (inputs only) and matched to the room-temperature data sheets in the NIMS catalogue (Furuya et al., Sci. Technol. Adv. Mater. 20 (2019) 1055, Table 1). To confirm against the heat lists in the sheets.
+The file has no grade label. Grades are assigned in `clean_nims.py` (column `grade`) from composition and processing, inputs only, and matched to the room-temperature data sheets in the NIMS catalogue (Furuya et al., Sci. Technol. Adv. Mater. 20 (2019) 1055, Table 1). For the structural steels the assignment is confirmed by NRIM SR-93-02 (Nishijima 1993), Table 1: the heat counts per grade match exactly (S35C 12, S45C 11, S55C 11, SMn 19, SCr440 8, SCM 29, SNC631 10, SNCM439 14, SNCM447 6), and the water-quench hardening temperatures (865, 845 and 825 °C) separate S35C, S45C and S55C. One steel is one heat. SMn438/SMn443 and SCM435/SCM440 overlap in carbon and are not split. Spring-steel grades remain inferred until sheets 59, 60 and 63 arrive.
 
 | Inferred grade | QT steels | THQCr | TT (°C) | Data sheet No. (DOI 10.11503/nims.…) |
 | --- | --- | --- | --- | --- |
@@ -80,12 +82,16 @@ The file has no grade label. Grades below are inferred from composition and proc
 
 Outside QT: the 11 normalized steels match S25C (sheet 1, DOI 1065); the 36 carburized steels match SCr420, SCM420, SNCM220 and SNCM420 (sheets 37, 43, 50, 51). Sheet 0 (DOI 1064) explains the project, including the common test procedure.
 
-On this inference, THQCr = 24 occurs in exactly the plain-carbon S-C grades and THQCr = 8 in every alloy and spring grade, including the plain-carbon-like SMn and SUP7 grades. This fits water against oil quenching by grade (to confirm from the sheets).
+THQCr = 24 occurs in exactly the plain-carbon S-C grades and THQCr = 8 in every alloy and spring grade. NRIM SR-93-02 Table 3 confirms water quenching for S35C, S45C and S55C and oil quenching for the alloy grades. For the spring steels (also code 8), oil quenching is likely but awaits their sheets.
+
+Checked against NRIM SR-93-02 Table 3 on 15 Nov 2026: every normalizing temperature (NT) and hardening temperature (THT) in this file matches the report, except SNC631, which the report quenches from 850 °C and this file records as 845 °C for all 10 steels. The file value is kept, since the prior does not use THT and the GP effect of 5 °C is negligible; to check against data sheet 24 when available.
+
+Table 1 notes that a few SNCM439 heats were supplied as bars of about 50 mm and hot rolled to size at NRIM; which heats is not stated. All bars were 19 to 22 mm (SMn 19 to 23, SNCM447 19 to 20) when cut into 200 mm pieces for heat treatment.
 
 ## Suspected missing values coded as 0
 
-- **Mo in SNCM447:** the 6 steels inferred as SNCM447 all have Mo = 0.00, although the grade specifies about 0.15 to 0.30 wt% Mo and the 14 SNCM439 steels have Mo 0.16 to 0.24. Probably not reported, then coded 0. To check against sheet 26.
-- **Mo in other grades:** 82 QT steels and all 11 normalized steels have Mo = 0. These are grades with no Mo specification, so 0 may mean "not analysed" rather than measured zero. The effect on any prior is small at residual levels, but the LLM arms will see "Mo 0.00" as a fact.
+- **Mo in SNCM447 (corrected):** the 6 SNCM447 steels all have Mo = 0.00 in the source file. NRIM SR-93-02 Table 2 gives 0.17 to 0.21 wt% for the heats tested, so this is a coding error. `clean_nims.py` sets Mo = 0.19 (the midpoint) for these 18 rows and flags them in column `mo_imputed`; every arm sees the corrected value. Per-heat values have been requested from NIMS (sheet 26) and will replace the midpoint if they arrive (DECISION_LOG entry 9).
+- **Mo in other grades:** 76 QT steels and all 11 normalized steels have Mo = 0. For S-C, SMn, SCr440 and SNC631, NRIM SR-93-02 lists Mo as "—" (not specified), so 0 means "not reported", not a measured zero. Kept as 0. The LLM arms will see "Mo 0.00", which is how such grades are usually reported.
 
 ## Differences from the published description
 
@@ -97,7 +103,7 @@ On this inference, THQCr = 24 occurs in exactly the plain-carbon S-C grades and 
 ## Open items
 
 - [ ] Download Additional file 1 from the journal page by hand and diff it against this copy column by column (names, units, values, row order, skip encoding), and record the result here.
-- [ ] Find the units of THQCr and TCr (values 0, 8, 24 and 0, 0.5, 24). Rule decided 12 Nov 2026 (prior/DECISION_LOG.md, entry 4): both LLM arms receive THQCr as a unitless code. In the QT pool only THQCr varies (8 or 24).
+- [x] Meaning of THQCr and TCr in the QT pool: confirmed 15 Nov 2026 (THQCr 24 = water quench, 8 = oil quench; TCr 24 = water cooled after tempering). All arms now see the quench medium by name (DECISION_LOG entries 4 and 8). The values 0.5 for TCr and 0 elsewhere occur only outside the QT pool and remain unexplained.
 - [ ] Confirm redistribution terms for the NIMS-derived data. Check first whether Additional file 1 is covered by the article's CC BY 2.0 licence; if so, redistribution with attribution may already be allowed, independent of the NIMS MatNavi terms for the underlying sheets. Until confirmed, data/raw/ and data/processed/ stay out of git; only the fetch script, checksum and this card are published.
 
 ## Design implication (see README)
