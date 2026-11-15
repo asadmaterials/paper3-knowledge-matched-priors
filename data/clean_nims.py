@@ -109,7 +109,9 @@ def assign_grade(df: pd.DataFrame) -> pd.Series:
         if r["Ni"] > 2.0:
             return "SNC631"
         if r["Ni"] > 1.3:
-            return "SNCM447" if r["Mo"] == 0 else "SNCM439"
+            # Carbon separates the grades (SNCM439 0.37 to 0.43, SNCM447
+            # 0.44 to 0.49 in this file); Mo is not used, as it gets corrected.
+            return "SNCM447" if r["C"] >= 0.44 else "SNCM439"
         if r["Mn"] >= 1.2:
             return "SMn438/443"
         if r["Mo"] >= 0.1:

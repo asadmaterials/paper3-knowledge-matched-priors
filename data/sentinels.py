@@ -52,12 +52,16 @@ def step_columns(step: str) -> list[str]:
 # NRIM SR-93-02 Table 3 (WQ for S35C/S45C/S55C, OQ for the alloy grades).
 # All arms see the medium by name (DECISION_LOG entry 4).
 QUENCH_MEDIUM = {24: "water quench", 8: "oil quench"}
+# Cooling after tempering, QT steels (NRIM SR-93-02 Table 3: WC). Other
+# TCr values occur only outside the QT pool and are passed as given.
+TEMPER_COOLING = {24: "water cooled"}
 
 
 def prompt_value(df: pd.DataFrame, row: int, col: str) -> str:
     """Value of `col` for an LLM prompt.
 
-    Skipped steps read 'not performed'; THQCr reads as the quench medium.
+    Skipped steps read 'not performed'; THQCr reads as the quench medium and
+    TCr as the cooling after tempering, where known.
     """
     for step, (tcol, others) in STEPS.items():
         if col == tcol or col in others:
@@ -65,6 +69,8 @@ def prompt_value(df: pd.DataFrame, row: int, col: str) -> str:
                 return "not performed"
     if col == "THQCr":
         return QUENCH_MEDIUM[int(df.at[row, col])]
+    if col == "TCr" and df.at[row, col] in TEMPER_COOLING:
+        return TEMPER_COOLING[int(df.at[row, col])]
     return str(df.at[row, col])
 
 

@@ -39,6 +39,7 @@ Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that app
 
 - Decision: both LLM arms (A3, A4) receive THQCr as a unitless code ("cooling-rate code 8" or "24"), since its unit is not stated in any source found and it varies in the QT pool. Omitting it would give the GP an input the LLM arms lack.
 - Reversible until the preregistration. The exact prompt string will live in `llm/prompts/` so the preregistration can point to it.
+- Added 15 Nov (review round 7, R15): the wording for the spring steels (SUP7, SUP9A, SUP12), "oil quench", is provisional. If sheets 59, 60 and 63 show another medium, the wording changes for all arms; before the preregistration this is an update, after it a reported deviation.
 - Updated 12 Nov (review round 4, R6): all arms get the same wording for THQCr. Until the NIMS sheets confirm what it encodes, the LLM arms see "cooling-rate code 8" or "24" and the codified prior does not use it. If the sheets confirm a quench medium, every arm sees that medium by name (for example "oil quench", "water quench"), and the codified prior may use it for quench severity.
 
 ## Entry 5, 12 Nov 2026: unequal exposure to the targets (review round 3, R2)
@@ -75,9 +76,10 @@ Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that app
 - Per-heat values requested from NIMS (sheet 26, email to datasht@nims.go.jp). If they arrive before the preregistration, they replace the midpoint; after it, the change is reported as a deviation.
 - The correction raises the codified prior for these steels, since GHP's Mo increment is largest at high tempering temperatures (580 to 680 °C here). Decided without reference to any target value.
 
-## Entry 10, 15 Nov 2026: measured hardness of the NIMS steels is target-adjacent (proposed rule, Asad to confirm)
+## Entry 10, 15 Nov 2026: no NIMS strength data before Gate A (adopted 15 Nov, review round 7, R13)
 
 - NRIM SR-93-02 section 2.3.1 says Vickers hardness (196 N) was measured on the Charpy specimens of every material condition, so the NIMS data sheets almost certainly carry hardness per heat and tempering temperature. Not seen.
 - With σw ≈ 1.6 HV, measured hardness is close to a proxy for the target. Looking at it would be exposure to the targets in all but name, and would make an excellent but unblinded check of GHP step 1.
-- Proposed rule: measured hardness from the NIMS sheets is not opened before Gate A. The independent check of GHP step 1 uses non-NIMS published tempering data (SPEC section 8.1). After Gate A, NIMS hardness may be used for diagnosis, reported as post hoc.
+- Rule (adopted): no NIMS measured hardness, tensile strength, proof stress, elongation, impact energy or other mechanical-property data, from the data sheets or from NRIM SR-93-02 beyond PDF page 9, is opened before Gate A. Fatigue limit is about 0.5 times tensile strength, so strength is at least as target-adjacent as hardness. The independent check of GHP step 1 uses non-NIMS published tempering data (SPEC section 8.1). After Gate A, these data may be used for diagnosis, reported as post hoc.
+- Reading protocol for NIMS data sheets before Gate A (sheets 26, 59, 60, 63 and any other): read only the material, chemical composition, heat-treatment and specimen sections. Do not view any results table or figure. Record in this log, as a new entry, the sheet, the pages read and what was taken from them, as in entry 8. If a page mixes inputs and results, record that and what was visible.
 
