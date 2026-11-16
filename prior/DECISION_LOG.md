@@ -35,6 +35,13 @@ Whichever is chosen, report per seed whether D₀ contains a TT ≤ 500 °C row,
 
 Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that appear at no tempering temperature of 550 °C or above, a separate sub-campaign from the 100-steel and 20-steel designs. This strengthens option 2: TT ≥ 550 °C is a clean 120-steel design with three tempering temperatures per steel. Whichever option is chosen, report a steel-level success measure as secondary (a hit is any row of a top-k steel), and state in the paper that one query is informative about a steel's other rows.
 
+Added 16 Nov (pool reasons, inputs or targets marked). Option 2 (TT ≥ 550 °C, 120 steels, 360 rows) is recommended by the reviewing chat and by this chat; awaiting Asad's decision:
+- (a) clean 120-steel × 3-temperature design (inputs only; R1);
+- (b) the 12 low-temper steels are a separate campaign that dominates the top of the QT pool (target-informed; seen 12 Nov, entry 2);
+- (c) the low-temper steels are exactly the 12 spring steels (SUP7, SUP9A, SUP12), whose hardenability inputs cannot be sourced without MatNavi access (inputs only; entry 11);
+- (d) the spring steels are the only QT steels above GHP's tested Si level, so excluding them removes the Si extension rule from the confirmatory analysis (inputs only).
+If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, with spring-steel hardenability "not applicable (inputs not sourced)". The top-1% and top-5% thresholds of the 360-row pool are computed only after the decision, and that computation is logged as target exposure of the endpoint thresholds.
+
 ## Entry 4, 12 Nov 2026: THQCr in the LLM arms
 
 - Decision: both LLM arms (A3, A4) receive THQCr as a unitless code ("cooling-rate code 8" or "24"), since its unit is not stated in any source found and it varies in the QT pool. Omitting it would give the GP an input the LLM arms lack.
@@ -82,4 +89,22 @@ Added 12 Nov (review round 3, R1): the 18 low-temper rows are 12 steels that app
 - With σw ≈ 1.6 HV, measured hardness is close to a proxy for the target. Looking at it would be exposure to the targets in all but name, and would make an excellent but unblinded check of GHP step 1.
 - Rule (adopted): no NIMS measured hardness, tensile strength, proof stress, elongation, impact energy or other mechanical-property data, from the data sheets or from NRIM SR-93-02 beyond PDF page 9, is opened before Gate A. Fatigue limit is about 0.5 times tensile strength, so strength is at least as target-adjacent as hardness. The independent check of GHP step 1 uses non-NIMS published tempering data (SPEC section 8.1). After Gate A, these data may be used for diagnosis, reported as post hoc.
 - Reading protocol for NIMS data sheets before Gate A (sheets 26, 59, 60, 63 and any other): read only the material, chemical composition, heat-treatment and specimen sections. Do not view any results table or figure. Record in this log, as a new entry, the sheet, the pages read and what was taken from them, as in entry 8. If a page mixes inputs and results, record that and what was visible.
+
+## Entry 11, 16 Nov 2026: NIMS data sheets unavailable
+
+- NIMS will not supply data sheets by email; MatNavi needs a DICE account with a registered institutional email domain (ID Workflow guide). Sheets 59, 60, 63 (SUP7, SUP9A, SUP12) and 26 (SNCM447 per-heat Mo) are unavailable for now.
+- Consequences: SNCM447 keeps Mo = 0.19 (entry 9); spring-steel hardenability is "not applicable (inputs not sourced)" (SPEC section 3, step 4(a)); the spring steels' "oil quench" wording stays provisional (entry 4). Every structural steel's inputs are sourced from NRIM SR-93-02.
+- Route if needed later: an HMC email address, with HMC registering its domain with DICE.
+
+## Entry 12, 16 Nov 2026: published expectation about high-Cr steels, recorded before any codified-prior correlation
+
+- Source, read in text 16 Nov 2026: Athavale and Van Aken (2017), Paper I of Athavale's dissertation (2019). Above 482 °C their GHP-based hybrid "had difficulty predicting hardness for steels with greater than 0.5 mass% chromium"; at 593 °C it over-estimated the tempered hardness of SAE 4142 (Q too large, D too small); above 538 °C predicted hardness exceeded measured hardness in general. GHP's own prediction for SAE 6145 (0.92% Cr) erred by up to 7 HRC at 649 °C (GHP Fig. 20). The authors conclude that predicting tempering response from chemistry alone "may not be possible, since contribution to hardening from each element may not be additive". GHP tested Cr only from 0.10 to 0.63%.
+- QT steels concerned (inputs only): 47 of the 100 main-cohort steels have Cr > 0.5% (SCM 29, SNC631 10, SCr440 8), tempered at 550 to 650 °C; the 20 SNCM steels (Cr 0.68 to 0.96%) are tempered at 580 to 680 °C.
+- Expectation, stated now: the codified prior's absolute hardness, and so its σw, will be least accurate, most likely too high, for these steels at these temperatures. This is a statement about accuracy. It does not predict the within-TT criterion's result, because a uniform overestimate for the Cr steels changes their rank against the other steels only if it differs between steels; and since entry 2 already shows that Cr steels have higher fatigue within a tempering temperature, an overestimate for them would not by itself lower the rank correlation. The stronger reading proposed in review ("weakest where Gate A tests it") is therefore not adopted as a prediction.
+- Pre-stated report: within-TT ρ separately for Cr ≤ 0.5 and Cr > 0.5 (SPEC section 8.5).
+
+## Entry 13, 16 Nov 2026: composition check against NRIM SR-93-02 Table 2 (inputs only)
+
+- Every structural QT steel's composition was compared with the tested-material ranges (ladle analysis) in Table 2, with a tolerance of 0.005 wt%. 48 values in 42 steels fall outside, nearly all by 0.01 to 0.08 wt%, consistent with the file holding check or product analyses rather than the report's ladle analyses.
+- One clear outlier: steel 37 (S55C) has Mn 0.37 wt%, against 0.67 to 0.84 tested and a JIS minimum of 0.60. Probably a data error, but there is no source for the true value without data sheet 4. Kept as is for all arms; the codified prior is reported with this steel's Mn set to the S55C median as a sensitivity check. Mn affects both the GHP increment and the A255 hardenability of this water-quenched steel.
 

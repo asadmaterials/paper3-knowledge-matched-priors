@@ -93,6 +93,14 @@ Table 1 notes that a few SNCM439 heats were supplied as bars of about 50 mm and 
 - **Mo in SNCM447 (corrected):** the 6 SNCM447 steels all have Mo = 0.00 in the source file. NRIM SR-93-02 Table 2 gives 0.17 to 0.21 wt% for the heats tested, so this is a coding error. `clean_nims.py` sets Mo = 0.19 (the midpoint) for these 18 rows and flags them in column `mo_imputed`; every arm sees the corrected value. Per-heat values have been requested from NIMS (sheet 26) and will replace the midpoint if they arrive (DECISION_LOG entry 9).
 - **Mo in other grades:** 76 QT steels and all 11 normalized steels have Mo = 0. For S-C, SMn, SCr440 and SNC631, NRIM SR-93-02 lists Mo as "—" (not specified), so 0 means "not reported", not a measured zero. Kept as 0. The LLM arms will see "Mo 0.00", which is how such grades are usually reported.
 
+## Composition against NRIM SR-93-02 Table 2
+
+Checked 16 Nov 2026 (DECISION_LOG entry 13). The file's compositions sit within or close to the report's ranges for the tested heats: 48 values in 42 steels are outside by 0.01 to 0.08 wt%, as expected if the file holds check analyses and the report ladle analyses. One clear outlier, kept as is: steel 37 (S55C), Mn 0.37 wt% against 0.67 to 0.84 tested (JIS minimum 0.60).
+
+## Spring steels
+
+The 12 spring steels (SUP7, SUP9A, SUP12) are exactly the 12 low-temper steels (TT 420 to 500 °C, 18 rows). Their data sheets (59, 60, 63) are unavailable (DECISION_LOG entry 11), so their quench medium, bar and specimen sizes and grain size are not sourced.
+
 ## Differences from the published description
 
 - The paper describes 25 features. This copy has 21. The four absent are RedRatio (reduction ratio, ingot to bar) and the inclusion area fractions dA (deformed by plastic work), dB (discontinuous arrays) and dC (isolated), per Table 1 as reproduced in Kookalani et al. (ISARC 2025). No arm sees them, so they create no input asymmetry between arms. If Additional file 1 becomes the source of record, this must be revisited.
