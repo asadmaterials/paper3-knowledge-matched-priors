@@ -76,7 +76,7 @@ where ΔHV_i is read from the chart for element i at content x_i (wt%); it is no
 - **Rule H (hold):** ΔHV_i(x) = ΔHV_i(x_max) for x > x_max.
 - **Rule E (extend in log content, matching the chart axis):** ΔHV_i(x) = ΔHV_i(x_max) + s · (log₁₀ x − log₁₀ x_max) for x > x_max, where s is the least-squares slope of ΔHV against log₁₀ x over the last 0.3 decade of the drawn curve (x_max/10^0.3 to x_max; the whole drawn curve if it is shorter), in HV per decade of content, floored at 0. A 0.3-decade window is used because digitizing error of a few HV over a 0.1-decade window would give slope errors of tens of HV per decade.
 - **Nickel:** GHP's own straight line, ΔHV = 10 × Ni/1.5 at every temperature, for all Ni contents. This is used at all contents under both rules; beyond 1.5% Ni it is an extrapolation and is reported as such.
-- The same rule is applied to Si and Cr and to every steel. Gate A is evaluated under both rules (section 8.5). The rule used in the BO arms is fixed in section 9 before the preregistration; the other rule is reported as a sensitivity analysis.
+- The same rule is applied to Si and Cr and to every steel. Gate A is evaluated under both rules (section 8.5). The BO arms use rule H (decided 17 Nov 2026, DECISION_LOG entry 16); rule E is reported as a sensitivity analysis.
 
 ### Step 2: fatigue limit from hardness (Murakami; Garwood et al.)
 
@@ -174,7 +174,7 @@ All NIMS correlations below are unblinded (DECISION_LOG entries 2 and 5); the in
 - [x] Obtain GHP 1977 (in hand 13 Nov 2026) and record its validity ranges (done).
 - [x] Confirm GHP's carbon range covers 0.63 wt% (yes) and whether its silicon range covers 2.05 wt% (no: tested to 0.85).
 - [ ] Digitize Fig. 7 and Figs. 11 to 17 at fixed contents per element, recording the end of each drawn curve (x_max). The PDF pages are native 300 dpi, 1-bit scans (2550 × 3300 px, checked with pdfimages, 16 Nov 2026), so no rescan is needed: extract them with `pdfimages -png` without resampling, and take care where thin curves break at crossings. Two independent passes: Asad with WebPlotDigitizer, and a second pass here. Report the largest and mean difference between passes in HV, per chart, at least for Fig. 7 and the Cr curves at 1000 to 1300 °F; then check each curve by overlay. Digitized files carry a header naming the paper and figure, and stating they are digitized values (M18).
-- [ ] Choose rule H or E for the BO arms (section 3, step 1), before the preregistration. Gate A uses both.
+- [x] Rule for the BO arms: H for Cr (and Si in the secondary pool), E as sensitivity analysis, decided 17 Nov 2026 (DECISION_LOG entry 16). Gate A uses both.
 - [x] Obtain the full ASTM A255: A255-10 (reapproved 2018) in hand, 17 Nov 2026; table numbers checked (section 3, steps 1 to 3). A255-26 is current but not obtained; differences from A255-10 are not known.
 - [ ] Transcribe the A255-10 factors from the Table 11, 15 and 16 equations, and check them against Tables 6, 2 and 3 and Table 7.
 - [x] NIMS bar and specimen sizes for the structural steels (NRIM SR-93-02, 15 Nov 2026). Spring steels: awaiting sheets 59, 60, 63.

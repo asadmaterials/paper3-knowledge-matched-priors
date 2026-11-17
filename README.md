@@ -31,3 +31,4 @@ Run all scripts from the repo root with `python -m`, so that `data`, `prior`, `l
 - 12 Nov 2026: review rounds 1 and 2 addressed; spec v0.2 (direct GHP table lookup at 1 h, plateau instead of cap, Gate A against heuristic references and within-TT skill); decision log started in `prior/DECISION_LOG.md`.
 - 16 Nov 2026: confirmatory pool set to the 360 QT rows tempered at 550 °C or above (120 steels, column `confirmatory`); the 378 QT rows are secondary.
 - 17 Nov 2026: hardenability and fatigue-relation sources checked (A255-10, E140-12b, ASM Vol. 4, Lamont charts, Murakami); grain size 7, quench severity ranges, Lamont interpolation, HRC 20 rule and linear σw = 1.6 HV recorded (DECISION_LOG entry 15).
+- 17 Nov 2026: Cr extension rule H for the BO arms, initial design from 10 distinct steels, and four LLM models (Claude Opus 5.5, GPT-6.1 Sol, gpt-oss-120b, gpt-oss-20b) recorded (DECISION_LOG entry 16).

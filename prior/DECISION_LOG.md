@@ -25,7 +25,7 @@ Consequences:
 
 ## Entry 3, decided 16 Nov 2026: confirmatory pool and initial design
 
-**Decision (Asad, 16 Nov 2026): option 2.** The confirmatory pool is TT ≥ 550 °C (120 steels, 360 rows; column `confirmatory` in the cleaned data, asserted in `clean_nims.py`). The full QT pool (132 steels, 378 rows) is the secondary analysis, with spring-steel hardenability "not applicable (inputs not sourced)". Reasons (a) to (d) below; (b) is target-informed, (a), (c) and (d) are from inputs only. The initial-design choice (stratified or not) is still open.
+**Decision (Asad, 16 Nov 2026): option 2.** The confirmatory pool is TT ≥ 550 °C (120 steels, 360 rows; column `confirmatory` in the cleaned data, asserted in `clean_nims.py`). The full QT pool (132 steels, 378 rows) is the secondary analysis, with spring-steel hardenability "not applicable (inputs not sourced)". Reasons (a) to (d) below; (b) is target-informed, (a), (c) and (d) are from inputs only. The initial-design choice (stratified or not) is still open. Decided 17 Nov 2026: not stratified, 10 distinct steels (entry 16).
 
 To decide before the preregistration (14 Dec 2026), among:
 
@@ -129,3 +129,31 @@ If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, 
 - Fatigue relation: σw = 1.6 HV at all hardness, no plateau, described as Murakami's ideal upper bound; flat hold at 640 MPa above 400 HV as a BO sensitivity analysis only. Spearman ρ, and so Gate A, is unchanged by any strictly increasing σw(HV).
 - Withdrawn argument: in the 16 Nov source check, the plateau was said to matter little because the confirmatory pool's top row (643 MPa) is about 400 HV. That used a measured target (already logged in entry 2) and is withdrawn as a reason; what matters is the prior's predicted HV, not yet computed. The choice above does not depend on it.
 - Exposure: nothing new about the targets was seen. Murakami Fig. 1.7 (NRIM data) was not viewed (entry 10).
+
+## Entry 16, 17 Nov 2026: Cr extension rule, initial design, LLM models (decided by Asad)
+
+**1. Cr extension rule in the BO arms: rule H.** Above the end of the drawn GHP curve x_max(Cr, T), ΔHV_Cr is held at its value at x_max; between GHP's tested level (0.63 wt%) and x_max the chart is read as drawn. Rule E is a sensitivity analysis. Gate A evaluates both, as before (SPEC 8.5).
+- Affected: 67 of the 120 confirmatory steels are above 0.63% Cr (47 of the 100 main-design steels and all 20 SNCM steels). How many are above x_max is known only after digitizing.
+- Reasons (sources only): GHP give no assurance for extrapolation beyond the curves drawn in their Figs. 8 to 17, and rule H adds nothing they did not draw, while rule E adds a slope they did not measure. Athavale and Van Aken (Athavale, PhD dissertation, Missouri S&T, 2019) report GHP-based predictions that are too high above 538 °C for SAE 4130 and 4142 (0.86% Cr) and 5160 (0.65% Cr). That error is present at or near GHP's tested range, so it is not caused by extrapolation and rule H does not fix it; rule H only avoids adding to it (rule E gives values at least as high as H, since its slope is floored at 0).
+- Not used as evidence: GHP Fig. 20 (SAE 6145, 0.92% Cr, errors up to 7 HRC above 538 °C), because GHP attribute that error to undissolved vanadium carbides, and the NIMS steels report no V.
+- Not a reason: the within-TT Cr pattern in the targets (entry 2). Disclosure: rule H flattens the ranking among Cr steels, which runs against that pattern, so the choice was not tuned toward the targets.
+- Si: no confirmatory steel exceeds GHP's tested Si level (maximum 0.35%); the 9 QT steels above 0.85% are all SUP7 and SUP12. Rule H for Si in the secondary pool, with E as sensitivity. Mn, Mo and C are within GHP's tested levels in the confirmatory pool.
+
+**2. Initial design D₀.** n₀ = 10 rows, drawn uniformly at random subject to coming from 10 distinct steels (`steel_id`), not stratified by TT, shared across all arms for a seed. Sampler: draw 10 rows uniformly without replacement and redraw the whole set if any steel repeats (rejection sampling, uniform over valid sets). On the confirmatory pool every steel has 3 rows, so this equals 10 random steels with 1 random row each; on the secondary pool (1 to 3 rows per steel) the two differ, and the rejection sampler is the rule. Reason (inputs only): with plain random draws, 22.8% of seeds would contain two rows of one steel (1 − Π_{i=0..9} (360 − 3i)/(360 − i)).
+
+**3. LLM models: four, none to be dropped.**
+
+| Role | Model | ID or weights |
+| --- | --- | --- |
+| Frontier, Anthropic | Claude Opus 5.5 | `claude-opus-5-5` |
+| Frontier, OpenAI | GPT-6.1 Sol | `gpt-6.1-sol` |
+| Large open weights | gpt-oss-120b | Hugging Face weights, Apache 2.0 |
+| Small open weights | gpt-oss-20b | Hugging Face weights, Apache 2.0; replaces the plan's ~8B model |
+
+- Option (a) adopted: both open-weights models from one family, for a clean size comparison. Stated limitation: three of the four models are from OpenAI, so results may not generalize beyond these two vendors.
+- Claude Opus 5.5 rather than Fable: Fable access was suspended from 12 June to 1 July 2026 under US export controls, and a preregistered study needs a model that stays reachable for reruns.
+- API only, no chat apps; no tools or browsing; identical prompts for every model.
+- Sampling: all four are reasoning models. Pre-stated: reasoning effort medium for GPT-6.1 Sol (checked: options low to max, default medium) and for both gpt-oss models; the Claude thinking setting is fixed in the preregistration; temperature is set only where the API allows it. Reproducibility comes from caching every output and from the repeat elicitations, not from temperature 0. (The research plan's "temperature 0" line is to be updated.)
+- Version records: GPT-6.1 Sol has no dated snapshots (checked on the OpenAI model page, 17 Nov 2026; knowledge cutoff 30 April 2026), so its run dates are recorded and all elicitations run in a short window. For Claude, the model ID and run dates. For gpt-oss: Hugging Face commit hash, inference engine and version, quantization and hardware. Exact reruns are claimed only for local runs of the open weights; if a hosted provider serves gpt-oss-120b, the provider is recorded and the claim is dropped for that model. Colab's GPU memory is to be checked before planning the 120b there (it needs about 80 GB).
+- Memorization: every model's training data postdate 2014, so all four are assumed to have seen the NIMS data; the memorization controls apply to all four.
+- Disclosure in the paper: Claude assisted with the code and prompts; no prompt was tuned against model outputs on the targets.
