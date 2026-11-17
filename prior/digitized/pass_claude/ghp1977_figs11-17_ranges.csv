@@ -1,0 +1,37 @@
+# Range of each traced curve in pass C (first and last traced point) with reading notes. See ghp1977_figs11-17.csv.
+fig,T_F,element,x_first,dHV_first,x_last,dHV_last,note
+11,700,Mn,0.02,1.9,1.791,79.4,
+11,700,P,0.02,5.8,0.249,44.2,
+11,700,Mo,0.031,2.9,0.492,45.7,
+11,700,Si,0.03,2.9,0.919,44.7,
+11,700,Cr,0.172,0.3,0.886,27.6,effectively zero below about 0.17%
+12,800,Mn,0.03,2.6,1.968,97.2,
+12,800,Si,0.041,5.9,0.984,43.6,
+12,800,P,0.02,2.0,0.248,44.5,"starts lower than on the other charts (about 2.3 HV at 0.02% against about 5.7), traced line confirmed at 5x zoom; joins the common P curve above about 0.05%"
+12,800,Cr,0.047,0.5,0.939,62.1,"lower dashed curve, steep between 0.22 and 0.37%, then the dashed tail to 0.95%; see Mo note"
+12,800,Mo,0.105,13.7,0.368,48.3,identity of the two dashed curves resolved by consistency with 700 and 900 deg F and GHP text (Cr maximal at 800 deg F; Mo rising to 1000 deg F): Mo is the upper dashed curve ending at the Mo label
+13,900,Mn,0.071,5.6,1.969,73.3,scan defect covers 0.025 to 0.16% and 0 to 5 HV; readable from 0.07%
+13,900,Cr,0.081,5.4,0.946,50.6,scan defect below 0.08%; drawn solid to about 0.6% and dashed from there to 0.95%
+13,900,Mo,0.102,5.7,0.492,49.5,scan defect below 0.10%
+13,900,Si,0.173,5.1,0.985,34.1,scan defect below 0.17%
+13,900,P,0.041,5.2,0.195,33.0,"below 0.04% inside scan defect; this P curve lies about 5 HV below the P curve of every other chart (GHP state P has the same effect at all temperatures), to be checked in pass A"
+14,1000,Mn,0.02,1.8,1.962,77.3,shares its line with Si and Cr between about 0.15 and 0.3%
+14,1000,P,0.02,5.8,0.249,44.6,
+14,1000,Mo,0.02,3.1,0.468,78.3,
+14,1000,Si,0.02,0.4,0.949,32.2,"Si and Cr are drawn as one dashed line below about 0.2%, which merges with the Mn line between about 0.15 and 0.32%"
+14,1000,Cr,0.02,0.4,0.949,44.5,same line as Si below about 0.2%; last dash (about 0.88 to 0.95%) runs into the label: x_last is 0.82% without it
+15,1100,Mn,0.021,1.7,1.968,82.5,
+15,1100,Si,0.021,1.7,0.985,32.4,"below about 0.06% Mn, Si and Cr overlap within about 1.5 HV"
+15,1100,P,0.021,5.7,0.246,44.5,
+15,1100,Mo,0.021,3.0,0.467,78.3,
+15,1100,Cr,0.021,0.5,0.849,46.9,below about 0.06% overlaps Mn and Si; last dash ends at the label
+16,1200,Mn,0.02,2.5,1.95,81.2,coincides with Si below about 0.25%
+16,1200,Si,0.02,2.5,0.974,32.2,coincides with Mn below about 0.25%
+16,1200,P,0.021,5.8,0.248,44.2,
+16,1200,Mo,0.02,2.5,0.479,65.4,
+16,1200,Cr,0.046,0.7,0.884,42.9,lower start: curve not separable from the bottom axis below about 0.045%
+17,1300,Mn,0.11,7.2,1.095,50.4,a scan defect covers 0.025 to 0.17% and 0 to 5 HV; curve readable from 0.11%; drawn only to about 1.1% (GHP tested to 1.95%)
+17,1300,Si,0.132,8.1,0.919,29.6,scan defect below about 0.13%
+17,1300,P,0.02,5.7,0.25,44.7,
+17,1300,Mo,0.18,16.3,0.492,47.8,scan defect: first readable dash at 0.18%
+17,1300,Cr,0.152,5.7,0.929,38.7,scan defect below about 0.15%

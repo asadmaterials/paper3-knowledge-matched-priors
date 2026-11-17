@@ -32,3 +32,4 @@ Run all scripts from the repo root with `python -m`, so that `data`, `prior`, `l
 - 16 Nov 2026: confirmatory pool set to the 360 QT rows tempered at 550 °C or above (120 steels, column `confirmatory`); the 378 QT rows are secondary.
 - 17 Nov 2026: hardenability and fatigue-relation sources checked (A255-10, E140-12b, ASM Vol. 4, Lamont charts, Murakami); grain size 7, quench severity ranges, Lamont interpolation, HRC 20 rule and linear σw = 1.6 HV recorded (DECISION_LOG entry 15).
 - 17 Nov 2026: Cr extension rule H for the BO arms, initial design from 10 distinct steels, and four LLM models (Claude Opus 5.5, GPT-6.1 Sol, gpt-oss-120b, gpt-oss-20b) recorded (DECISION_LOG entry 16).
+- 17 Nov 2026: GHP 1977 Fig. 7 and Figs. 11 to 17 digitized, pass C (Claude): `prior/digitized/pass_claude/`, scripts and reading notes in `prior/digitize/`. Pass A (WebPlotDigitizer) pending.
