@@ -90,6 +90,7 @@ If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, 
 - NRIM SR-93-02 section 2.3.1 says Vickers hardness (196 N) was measured on the Charpy specimens of every material condition, so the NIMS data sheets almost certainly carry hardness per heat and tempering temperature. Not seen.
 - With σw ≈ 1.6 HV, measured hardness is close to a proxy for the target. Looking at it would be exposure to the targets in all but name, and would make an excellent but unblinded check of GHP step 1.
 - Rule (adopted): no NIMS measured hardness, tensile strength, proof stress, elongation, impact energy or other mechanical-property data, from the data sheets or from NRIM SR-93-02 beyond PDF page 9, is opened before Gate A. Fatigue limit is about 0.5 times tensile strength, so strength is at least as target-adjacent as hardness. The independent check of GHP step 1 uses non-NIMS published tempering data (SPEC section 8.1). After Gate A, these data may be used for diagnosis, reported as post hoc.
+- Also not opened before Gate A (added 17 Nov 2026, review round 8, M23): Murakami, *Metal Fatigue*, 2nd ed., Fig. 1.7 (Nishijima 1980, hardness against fatigue limit for NRIM normalized and QT steels), which is NIMS fatigue data. Not viewed.
 - Reading protocol for NIMS data sheets before Gate A (sheets 26, 59, 60, 63 and any other): read only the material, chemical composition, heat-treatment and specimen sections. Do not view any results table or figure. Record in this log, as a new entry, the sheet, the pages read and what was taken from them, as in entry 8. If a page mixes inputs and results, record that and what was visible.
 
 ## Entry 11, 16 Nov 2026: NIMS data sheets unavailable
@@ -116,3 +117,15 @@ If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, 
 - Rule, fixed now: the top-k set is the k highest rows; if a later data change creates a tie at the cutoff, all tied rows are included and the rule is reported.
 - Exposure: these two thresholds and the fact that each set has one row per steel. Nothing else about the targets on this pool was computed.
 
+
+## Entry 15, 17 Nov 2026: hardenability inputs and the fatigue relation (review round 8; inputs and sources only)
+
+- Sources checked 16 and 17 Nov 2026: ASTM A255-10 (2018), full; A255-20a, 4-page preview; A255-02, superseded; ASTM E140-12b (2019); ASM Handbook Vol. 4 (1991); Totten (2006) section 5.5.1; Murakami, *Metal Fatigue*, 2nd ed. (2019). None is committed to the repo.
+- Grain size: 7, as A255-10 section 10.3 assumes. Bias stated: NRIM reports 8 to 10, so D_I is overstated and fewer steels are flagged. Grain size 8 to 10 only as a sensitivity analysis, if sourced carbon factors are obtained.
+- A255 validity: 31 of the 120 confirmatory steels are outside the main composition range of section 10.1, within the factor-only ranges of 10.1.1. Computed with the 10.1.1 factors and flagged; sensitivity analysis treats them as fully hardened.
+- Below HRC 20: hybrid not applicable where Q, IH or RQ is below HRC 20 (E140 forbids converting outside its range); RT = Q, flagged and counted; extrapolated Eq. (A1.1) as sensitivity analysis.
+- Lamont position: equivalent Jominy distance interpolated linearly in r/R between the r/R = 0 and 0.5 charts at each steel's r/R; the two charts alone as bounds.
+- Quench severity: water 0.9 to 1.5 (central 1.1), oil 0.25 to 0.5 (central 0.35), from no agitation to good agitation.
+- Fatigue relation: σw = 1.6 HV at all hardness, no plateau, described as Murakami's ideal upper bound; flat hold at 640 MPa above 400 HV as a BO sensitivity analysis only. Spearman ρ, and so Gate A, is unchanged by any strictly increasing σw(HV).
+- Withdrawn argument: in the 16 Nov source check, the plateau was said to matter little because the confirmatory pool's top row (643 MPa) is about 400 HV. That used a measured target (already logged in entry 2) and is withdrawn as a reason; what matters is the prior's predicted HV, not yet computed. The choice above does not depend on it.
+- Exposure: nothing new about the targets was seen. Murakami Fig. 1.7 (NRIM data) was not viewed (entry 10).
