@@ -75,6 +75,19 @@ def check_qt(df: pd.DataFrame) -> None:
         raise SystemExit("A QT steel appears twice at one tempering temperature")
 
 
+CONFIRMATORY_MIN_TT = 550  # degC; DECISION_LOG entry 3 (16 Nov 2026)
+
+
+def assign_pool(df: pd.DataFrame) -> pd.Series:
+    """True for rows in the confirmatory pool: QT route, TT >= 550 degC."""
+    pool = (df["route"] == "QT") & (df["TT"] >= CONFIRMATORY_MIN_TT)
+    if pool.sum() != 360 or df.loc[pool, "steel_id"].nunique() != 120:
+        raise SystemExit("Confirmatory pool is not 360 rows and 120 steels")
+    if df.loc[pool, "grade"].str.startswith("SUP").any():
+        raise SystemExit("A spring steel is in the confirmatory pool")
+    return pool.rename("confirmatory")
+
+
 # Steels (heats) per grade in the QT pool, from NRIM SR-93-02 Table 1
 # (Nishijima 1993) for the structural steels; spring-steel counts are
 # inferred from composition until NIMS sheets 59, 60 and 63 arrive.
@@ -154,9 +167,10 @@ def main() -> None:
     df["grade"] = assign_grade(df)
     check_grades(df)
     df = correct_mo(df)
+    df["confirmatory"] = assign_pool(df)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    cols = (["row_id", "steel_id", "route", "grade"] + COMPOSITION + PROCESS
-            + ["mo_imputed", TARGET])
+    cols = (["row_id", "steel_id", "route", "grade", "confirmatory"]
+            + COMPOSITION + PROCESS + ["mo_imputed", TARGET])
     df[cols].to_csv(OUT, index=False)
     print(f"Wrote {OUT}: {len(df)} rows")
     print(df["route"].value_counts().to_string())

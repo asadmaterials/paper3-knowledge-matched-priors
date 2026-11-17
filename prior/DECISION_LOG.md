@@ -23,7 +23,9 @@ Consequences:
 - Gate A criteria in SPEC section 8 now require the codified prior to beat the heuristic references and to show within-TT skill.
 - The within-TT pattern is consistent with a hardenability effect (alloy steels fully hardened, plain carbon steels not) but has not been tested. It may also reflect cleanliness or grade. Any hardenability term must be chosen and sourced on metallurgical grounds, not tuned to these numbers, and this entry must be cited in the paper as prior exposure.
 
-## Entry 3, open: confirmatory pool and initial design
+## Entry 3, decided 16 Nov 2026: confirmatory pool and initial design
+
+**Decision (Asad, 16 Nov 2026): option 2.** The confirmatory pool is TT ≥ 550 °C (120 steels, 360 rows; column `confirmatory` in the cleaned data, asserted in `clean_nims.py`). The full QT pool (132 steels, 378 rows) is the secondary analysis, with spring-steel hardenability "not applicable (inputs not sourced)". Reasons (a) to (d) below; (b) is target-informed, (a), (c) and (d) are from inputs only. The initial-design choice (stratified or not) is still open.
 
 To decide before the preregistration (14 Dec 2026), among:
 
@@ -107,4 +109,10 @@ If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, 
 
 - Every structural QT steel's composition was compared with the tested-material ranges (ladle analysis) in Table 2, with a tolerance of 0.005 wt%. 48 values in 42 steels fall outside, nearly all by 0.01 to 0.08 wt%, consistent with the file holding check or product analyses rather than the report's ladle analyses.
 - One clear outlier: steel 37 (S55C) has Mn 0.37 wt%, against 0.67 to 0.84 tested and a JIS minimum of 0.60. Probably a data error, but there is no source for the true value without data sheet 4. Kept as is for all arms; the codified prior is reported with this steel's Mn set to the S55C median as a sensitivity check. Mn affects both the GHP increment and the A255 hardenability of this water-quenched steel.
+
+## Entry 14, 16 Nov 2026: endpoint thresholds on the confirmatory pool (target exposure, logged)
+
+- Computed after the decision in entry 3, and only these quantities: for the 360-row pool, top 1% = ceil(0.01 × 360) = 4 rows, threshold 634 MPa, next value below 631 MPa; top 5% = ceil(0.05 × 360) = 18 rows, threshold 604 MPa, next value below 603 MPa. No ties at either cutoff. Each top-k set contains one row per steel (4 and 18 steels).
+- Rule, fixed now: the top-k set is the k highest rows; if a later data change creates a tie at the cutoff, all tied rows are included and the rule is reported.
+- Exposure: these two thresholds and the fact that each set has one row per steel. Nothing else about the targets on this pool was computed.
 

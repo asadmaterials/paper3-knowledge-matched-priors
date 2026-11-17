@@ -47,6 +47,10 @@ Handling rule, used by every arm (`data/sentinels.py`): the codified prior branc
 
 Within QT, tempering time is 60 min for every row (zero variance, asserted in `clean_nims.py`), so the tempering parameter varies only through tempering temperature (420 to 680 °C). Through-hardening temperature takes four values (825 to 865 °C).
 
+## Confirmatory pool
+
+From 16 Nov 2026 (DECISION_LOG entry 3), the confirmatory pool is the 360 QT rows tempered at 550 °C or above: the 100-steel and 20-steel designs (120 steels), with the 12 spring steels excluded. Column `confirmatory` in the cleaned file; `clean_nims.py` asserts 360 rows, 120 steels and no spring steel. The 378 QT rows are the secondary pool.
+
 ## Steel structure of the QT pool
 
 The 378 QT rows are 132 steels, not 378 independent samples. A steel is one composition with one normalizing, through-hardening and quench condition (`steel_id` in the cleaned file); its rows differ only in tempering temperature. The 132 compositions are all distinct.

@@ -29,3 +29,4 @@ Run all scripts from the repo root with `python -m`, so that `data`, `prior`, `l
 - Week 1 (3 to 9 Nov 2026): data obtained, checksummed, cleaned; data card written.
 - 3 Nov 2026: primary pool set to the 378 QT rows (all top-1% and top-5% rows of the full pool are carburized). Codified prior spec v0.1 drafted in `prior/SPEC.md`; coefficients pending the original GHP 1977 source.
 - 12 Nov 2026: review rounds 1 and 2 addressed; spec v0.2 (direct GHP table lookup at 1 h, plateau instead of cap, Gate A against heuristic references and within-TT skill); decision log started in `prior/DECISION_LOG.md`.
+- 16 Nov 2026: confirmatory pool set to the 360 QT rows tempered at 550 °C or above (120 steels, column `confirmatory`); the 378 QT rows are secondary.
