@@ -29,6 +29,8 @@ SPEC section 9 describes all the charts as 300 dpi 1-bit scans. That holds for F
 
 **Calibration.** Gridline positions were found from dark-pixel column and row sums. The mapping from pixel to value is piecewise linear between gridlines: the content axis in log10, the hardness axis linear. A single linear fit over the Fig. 7 gridlines leaves residuals up to ±1.1 HV (scan distortion), which the piecewise mapping avoids.
 
+**Fig. 7, misplaced "100" label.** The label "100" is printed beside the bottom frame (pixel row 482), but the 100 HV gridline is the heavy line at row 469, 13 px higher. The gridlines from 200 to 800 HV are 66.4 px apart, so 100 HV falls at row 468 to 469 and the frame is at about 80 HV. `fig7.py` uses row 469 as 100 HV. Taking the frame as 100 would bias the lowest curves by about 15 HV. Pass A found the same independently.
+
 **Fig. 7.** The ten curves (400 to 1300 °F) are tracked automatically, column by column:
 - the trackers start from two seed columns where all ten curves separate (pixel columns 160 and 360);
 - candidates are assigned to curves with an order-preserving rule, since the curves do not cross;
@@ -110,4 +112,49 @@ Counted on the cleaned data, from composition and TT only. A row counts if eithe
 
 ## Comparison with pass A
 
-When pass A is ready, compare both passes on the grids used here (C in 0.01 steps for Fig. 7, 0.01-decade content steps for Figs. 11 to 17). For each chart, report the largest and mean difference in HV, and at least separately for Fig. 7 and the Cr curves at 1000 to 1300 °F (SPEC section 9). Give the 800 °F Mo and Cr identification and the 900 °F P curve particular attention.
+Pass A (Asad, WebPlotDigitizer) arrived 23 Nov 2026 and is in `prior/digitized/pass_asad/`. It covers the charts the confirmatory pool needs (TT 550 to 680 °C, i.e. 1022 to 1256 °F):
+- Fig. 7 at 1000 to 1300 °F;
+- Figs. 14 to 17, Mn, Si, Cr, Mo and P.
+
+Figs. 11 to 13 and Fig. 7 at 400 to 900 °F have pass C only. They are needed only for the secondary pool (spring steels at 420 to 500 °C).
+
+`compare.py` interpolates pass C at every pass A point, within pass C's traced range. The results are in `prior/digitized/comparison/`: a summary per curve and every point. Differences are pass A minus pass C.
+
+| Curve | Points compared | Largest difference (HV) | Mean difference (HV) | Mean absolute difference (HV) |
+| --- | --- | --- | --- | --- |
+| Fig. 7, 1000 °F | 27 | 1.42 | +0.35 | 0.56 |
+| Fig. 7, 1100 °F | 35 | 1.96 | +0.46 | 0.66 |
+| Fig. 7, 1200 °F | 42 | 1.71 | +0.57 | 0.74 |
+| Fig. 7, 1300 °F | 43 | 1.53 | +0.08 | 0.52 |
+| Cr, 1000 °F | 25 | 0.91 | −0.28 | 0.41 |
+| Cr, 1100 °F | 27 | 1.22 | −0.22 | 0.32 |
+| Cr, 1200 °F | 23 | 0.85 | +0.04 | 0.18 |
+| Cr, 1300 °F | 20 | 0.68 | +0.10 | 0.16 |
+| All 20 element curves | 845 | 1.80 (Mo, 1200 °F, at 0.16%) | −0.43 to +0.10 | 0.11 to 0.58 |
+
+- **No curve where the passes followed different lines.** Every difference is within 2 HV. The largest are on steep stretches of Mo, at the left ends of curves, and for Fig. 7, where one pixel is about 1.5 HV.
+- **Fig. 7 bias:** pass A reads 0.1 to 0.6 HV higher on average, under half a pixel.
+- **Drawn ends:** the passes agree within 4% of content, except Mn at 1300 °F. There pass A ends where the curve runs into its label (1.20%) and pass C before it (1.10%).
+- **Ends that include a final dash near a label:** for Cr, pass A ends later at 1000 and 1100 °F, pass C later at 1300 °F.
+- **Value at the drawn end, the value rule H holds:** the passes differ by at most 0.9 HV on every curve.
+
+### The Fig. 17 dark patch
+
+Pass A found that the black area at the lower left of Fig. 17 is inverted, not lost ink. Before opening any pass A file, pass C examined the patch and recorded a reading (scratch note, 23 Nov 2026; summarized here):
+- The major vertical gridlines appear white inside the black, which confirms the inversion.
+- Four white marks were read: three short shallow ones near 0.054, 0.064 and 0.077% (read by eye at 2.6 to 3.6 HV), and one steep one, W4, at 0.124 to 0.135% (2.2 to 3.8 HV, centre 0.129%, 3.0 HV), placed on the extension of the Cr dashes.
+- No reading of the solid Mn/Si line inside the patch was claimed.
+
+Against pass A:
+- **W4** matches pass A's Cr (0.123%, 2.28 HV; 0.129%, 3.11 HV) within 0.1 HV, assigned to the same curve. This check was blind.
+- **The three shallow marks** were read by eye about 0.7 to 0.9 HV above pass A's Mo points. A column-by-column pixel measurement after opening pass A places them at 1.9 to 2.1 HV (0.054%), 2.5 HV (0.064%) and 3.3 HV (0.078%), within 0.3 HV of pass A's Mo. That measurement was not blind.
+- **Mn and Si inside the patch:** pass A interpolated between gridline gaps. Pass C has no independent reading.
+
+Outside the patch, pass A reads Mo dashes at 0.113% (5.76 HV) and 0.137 to 0.161% (9.1 to 13.0 HV), above the patch. Pass C had seen candidate dashes at (0.113%, 5.9 HV) and (0.144%, 10.8 HV) but left them out as ambiguous. Pass A supports them as Mo.
+
+What the data need below pass C's first points at 1300 °F:
+- Mo 0.15 to 0.17% (22 rows): covered by the Mo dashes above the patch.
+- Cr 0.01 to 0.15% at 650 °C: the 1300 °F chart has a weight of only 0.02 there.
+- Si (minimum 0.16%) and Mn (minimum 0.37%): never below pass C's first points (0.13% and 0.11%).
+
+The decision is recorded in DECISION_LOG entry 17.

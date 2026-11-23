@@ -157,3 +157,29 @@ If option 2 is chosen, the full QT pool (132 steels) is the secondary analysis, 
 - Version records: GPT-6.1 Sol has no dated snapshots (checked on the OpenAI model page, 17 Nov 2026; knowledge cutoff 30 April 2026), so its run dates are recorded and all elicitations run in a short window. For Claude, the model ID and run dates. For gpt-oss: Hugging Face commit hash, inference engine and version, quantization and hardware. Exact reruns are claimed only for local runs of the open weights; if a hosted provider serves gpt-oss-120b, the provider is recorded and the claim is dropped for that model. Colab's GPU memory is to be checked before planning the 120b there (it needs about 80 GB).
 - Memorization: every model's training data postdate 2014, so all four are assumed to have seen the NIMS data; the memorization controls apply to all four.
 - Disclosure in the paper: Claude assisted with the code and prompts; no prompt was tuned against model outputs on the targets.
+
+## Entry 17, 23 Nov 2026: digitizing pass A, comparison with pass C, and the Fig. 17 patch (inputs only)
+
+- **Pass A** (Asad, WebPlotDigitizer) received 23 Nov 2026: Fig. 7 at 1000 to 1300 °F and Figs. 14 to 17 (Mn, Si, Cr, Mo, P), stored in `prior/digitized/pass_asad/` with source headers added and values unchanged. The WebPlotDigitizer project files contain the figures and are not committed.
+- **Independence disclosure:**
+  - Asad saw the pass C overlay PDF and the values quoted in the pass C message before starting pass A.
+  - During pass A, the reviewing chat helped with calibration and curve identification, using only the chart images, never the pass C files.
+  - Curve identification is therefore not fully independent between the passes. The point readings in pass A are Asad's own.
+  - Pass C recorded its own reading of the Fig. 17 patch before opening any pass A file.
+- **Comparison** (`prior/digitize/compare.py`, results in `prior/digitized/comparison/`; differences are pass A minus pass C):
+  - Fig. 7 at 1000 to 1300 °F: largest difference 1.4 to 2.0 HV, mean +0.1 to +0.6 HV.
+  - Cr at 1000 to 1300 °F: largest 0.7 to 1.2 HV, mean −0.3 to +0.1 HV.
+  - All 20 element curves: largest 1.8 HV, mean absolute difference 0.1 to 0.6 HV.
+  - No curve where the passes followed different lines.
+  - Drawn ends agree within 4% of content, except Mn at 1300 °F (pass A 1.20%, pass C 1.10%).
+  - The ΔHV at the drawn end, which rule H holds, differs by at most 0.9 HV.
+- **Fig. 7 calibration:** the "100" label is printed beside the bottom frame, but 100 HV is the heavy gridline 13 px above it. Both passes use the gridline.
+- **Fig. 17 patch:** confirmed as an inverted region, with gridlines and curves white on black.
+  - The one steep white mark that pass C read before opening pass A (0.129%, 3.0 HV) matches pass A's Cr within 0.1 HV, assigned to the same curve.
+  - The three shallow marks match pass A's Mo within 0.3 HV, but only on a pixel measurement made after opening pass A. Pass C's blind reading by eye was 0.7 to 0.9 HV higher.
+  - Decisions:
+    - **Cr at 1300 °F:** pass A's patch readings are primary below 0.15%. They agree with the blind pass C mark.
+    - **Mo at 1300 °F:** the Mo curve is extended down to 0.113% using the Mo dashes above the patch, which both passes saw. No row needs Mo below 0.113% (Mo in the data is 0 or 0.15 to 0.24%), so the shallow marks inside the patch decide nothing.
+    - **Mn and Si inside the patch:** pass A only. No row needs them (Si at least 0.16%, Mn at least 0.37%).
+- **Low contents (as stated by Asad, 23 Nov 2026, in the pass A note):** below the first readable point of a curve, ΔHV is a straight line in content from zero at zero content to that point. This applies to P below 0.02% on every chart, Cr at the 1000 to 1300 °F lower ends, and anything below pass A's first patch reading at 1300 °F. As a sensitivity analysis, pass A's patch readings are replaced by this line.
+- **Still open:** the rule for combining the two passes into the values the prior uses; and a second pass of Figs. 11 to 13 and of Fig. 7 at 400 to 900 °F, which only the secondary pool needs.
