@@ -170,3 +170,56 @@ python -I prior/digitize/combine.py prior/digitized/pass_asad prior/digitized/pa
 - **Values:** the mean of the two passes where both cover a content; the single pass where only one does. Column `source` says which (both, A or C), and the two passes' own values are kept beside the mean.
 - **Range of each curve:** from the earlier first point to the later drawn end of the two passes. `ghp1977_figs11-17_combined_ends.csv` lists the first readable point (start of the low-content line) and x_max (where rule H holds).
 - **Dropped readings:** pass A element readings at or below 0 HV are dropped as axis ink: 9 points, on Fig. 14 Cr and Si.
+
+## Hardenability charts: Crafts and Lamont D and f, and Lamont r/R charts (pass C, 25 Nov 2026)
+
+Values are in `prior/digitized/pass_claude/`. They are kept out of the chat until pass A is done.
+
+### Crafts and Lamont (1947) D and f
+
+**Source.** The 1947 paper is not in hand. These are the reproductions in Athavale's dissertation (Missouri S&T, 2019): redrawn, clean colour figures, 220 ppi JPEG.
+- D: Paper I Fig. 4, and Paper I Fig. 9, which shows the original curve again beside the dissertation's "corrected" curve.
+- f: Paper I Fig. 5, and Paper II Fig. 3, which labels all ten lines.
+
+`crafts_lamont.py` reproduces the outputs. Inputs are extracted with `pdfimages`; the pages are listed in its docstring.
+
+**Method.**
+- **Calibration:** linear fits to the frame and tick marks. The largest tick residual is 4 °F and 0.09 HRC for the D figures, and 0.002 wt% C and 0.004 f for the f figures. About half a pixel in all four.
+- **D:** each curve is drawn as two straight segments. A continuous two-segment line, with the kink position fitted, is laid through the curve's coloured pixels. Ink more than 3 px from the fit (labels, arrows) is dropped and the fit repeated. Residuals are under 3 px.
+- **f:** the ten lines are straight. They are separated by colour (solid black, dashed red) and by intercept, and each is fitted by least squares.
+- **f identification:** Paper II Fig. 3 labels every line: solid 400, 600, 800, 1000 and 1200 °F, dashed 500 to 1300 °F. Paper I Fig. 5 labels only the solid temperatures, so the identification comes from Paper II.
+- **Drawn range of each f line:** C 0.05 to 0.65%, cut where the line meets f = 1.0 or f = 0.
+
+**Checks.**
+- The two renditions agree within 6 °F and 0.08 HRC on the D vertices, and within 0.002 on f at 0.28, 0.45 and 0.63% C.
+- They are evidently drawn from the same source, so this checks the reading, not the dissertation's transcription of the 1947 figures.
+- Overlays drawn back on the figures were inspected.
+
+**Points for the spec** (SPEC section 9):
+1. The corrected D curve is drawn only to about 1220 °F (660 °C). That is below the 680 °C rows, so the sensitivity analysis needs a rule beyond the drawn end.
+2. The f lines for 1200 and 1300 °F reach f = 0 below 0.63% C, within the data's carbon range. A rule is needed past that point. f = 0 is the obvious one, since the lines are drawn to the axis.
+
+### Lamont charts, r/R = 0 and 0.5
+
+**Source.** Totten (ed.), *Steel Heat Treatment: Metallurgy and Technologies*, 2nd ed. (CRC, 2006), Figs. 5.49 and 5.50, after Lamont, Iron Age 152 (1943) 64 to 70. In this excerpt the charts are vector drawings, not scans. Each H curve is one or more cubic Bezier segments, and `lamont_vector.py` evaluates them exactly.
+
+**Reading error.** The only source of reading error is the axis calibration:
+- the inch gridlines are uniformly spaced in the PDF;
+- the labels sit within about 0.5 pt of their lines;
+- so the error is under 0.2 mm of Jominy distance and under 0.5 mm of bar diameter.
+
+**What the files cover.**
+- Output: J against D every 0.025 in. within each curve's drawn range, for H = 0.2, 0.35, 0.5, 0.7, 1.0, 1.5, 2.0, 5.0 and ∞.
+- Every H from 0.2 to 2.0 covers the 19 to 23 mm bars at both r/R. H = ∞ at both positions, and H = 5.0 at r/R = 0.5, start above that size range. Neither is needed.
+- At r/R = 0.5 the H = 5.0 curve is drawn dashed beyond J = 1.3 in.; those rows are flagged.
+- Curves are identified by their order at the right-hand edge. That order matches the H labels, whose positions agree with the curve ends within 0.13 in. of D.
+
+**Checks.**
+- **Worked examples in Totten's text, read with the figures' own construction lines:**
+  - 120 mm bar, H = 1.0, centre gives J = 37.5 mm: agrees within 0.004 in.
+  - H = 0.35, J = 10 mm, r/R = 0.5 gives D = 28 mm: within 0.025 in.
+  - D = 50 mm, J = 15 mm, centre gives H = 0.5: the H = 0.5 curve passes 2.7 mm of bar diameter away. The example is stated loosely.
+- **Totten's mm scales:** on Fig. 5.49 the mm scales disagree with the inch scales by up to about 3% (the 160 mm tick sits at 6.5 in., i.e. 165 mm). The text's examples are read on those mm scales, which is why they look 1 to 2 mm off when converted exactly. Only the inch scales are used.
+- **Against ASM Handbook Vol. 4, "Quenching of Steel", Table 12** (Jominy distance against equivalent bar diameter for 1141 steel, apparently at the bar centre): Totten's r/R = 0 chart gives larger bar diameters for the same J at every H compared (1.0, 1.5, 2.0, ∞), by 0.10 to 0.20 in. on average. At 19 to 23 mm bars it gives a Jominy distance 1.1 to 1.5 mm shorter than Table 12 for H = 1.0 to 2.0.
+
+  This is a difference between sources, not a reading error, and it is larger than the reading error by a factor of about 7. Table 12 is for one steel and its footnote has not been checked. SPEC uses Table 12 only as a cross-check of the centre chart, so the size of this difference should be recorded when the spec is frozen.

@@ -182,10 +182,10 @@ All NIMS correlations below are unblinded (DECISION_LOG entries 2 and 5); the in
 - [x] NIMS bar and specimen sizes for the structural steels (NRIM SR-93-02, 15 Nov 2026). Spring steels: awaiting sheets 59, 60, 63.
 - [x] H central values and ranges for water and oil entered from ASM Handbook Vol. 4, 17 Nov 2026 (section 3, step 2).
 - [x] Lamont's charts obtained (Totten 2006, r/R = 0, 0.5, 0.8; ASM Vol. 4 Fig. 41), 17 Nov 2026.
-- [ ] Digitize the Lamont r/R = 0 and 0.5 charts for bar diameters 19 to 23 mm, two passes, and report the reading error in mm of Jominy distance.
+- [ ] Digitize the Lamont r/R = 0 and 0.5 charts for bar diameters 19 to 23 mm, two passes, and report the reading error in mm of Jominy distance. Pass C done 25 Nov 2026 by exact evaluation of the vector paths in Totten Figs. 5.49 and 5.50 (`prior/digitized/pass_claude/lamont_rR0_rR05.csv`; calibration error under 0.2 mm of Jominy distance); pass A pending. The centre chart differs from ASM Vol. 4 Table 12 by 1.1 to 1.5 mm of Jominy distance at 19 to 23 mm bars (`prior/digitize/README.md`).
 - [ ] Optional: Grossmann (1942), Trans. AIME 150, for carbon factors by grain size (grain size 8 to 10 sensitivity).
 - [x] Hardness-reduction rule chosen: Athavale and Van Aken hybrid (step 3), 16 Nov 2026.
-- [ ] Obtain Crafts and Lamont (1947) Figs. 2 and 4 (OneMine), or digitize the reproductions in the dissertation.
+- [ ] Obtain Crafts and Lamont (1947) Figs. 2 and 4 (OneMine), or digitize the reproductions in the dissertation. Pass C of the dissertation reproductions done 25 Nov 2026 (`prior/digitized/pass_claude/crafts_lamont_D.csv`, `crafts_lamont_f.csv`); pass A pending. Two questions for the spec: the corrected D curve is drawn only to about 1220 °F (660 °C), below the 680 °C rows; and the f lines for 1200 and 1300 °F reach f = 0 below 0.63% C, so a rule is needed beyond that point (for example f = 0).
 - [x] ASTM E140-12b obtained, Eq. (A1.1) and Table 1, 17 Nov 2026.
 - [x] σw ≈ 1.6 HV checked in Murakami (2nd ed., 2019), 17 Nov 2026; no plateau source exists there, and none is now needed (section 3, output and range handling).
 - [ ] Further non-NIMS 1 h tempering data for common grades (section 8.1).

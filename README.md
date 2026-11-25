@@ -35,3 +35,4 @@ Run all scripts from the repo root with `python -m`, so that `data`, `prior`, `l
 - 17 Nov 2026: GHP 1977 Fig. 7 and Figs. 11 to 17 digitized, pass C (Claude): `prior/digitized/pass_claude/`, scripts and reading notes in `prior/digitize/`. Pass A (WebPlotDigitizer) pending.
 - 23 Nov 2026: pass A (WebPlotDigitizer) of Fig. 7 at 1000 to 1300 °F and Figs. 14 to 17 added and compared with pass C (largest difference 2.0 HV); Fig. 17 patch readings and the low-content rule recorded (DECISION_LOG entry 17).
 - 25 Nov 2026: combined GHP curves (mean of passes A and C, single pass flagged) in `prior/digitized/combined/`; low-content rule, rule H for every element, Cu = 0 and the secondary-pool second pass recorded (DECISION_LOG entry 17).
+- 25 Nov 2026: Crafts and Lamont D and f (dissertation reproductions) and Lamont r/R = 0 and 0.5 charts (Totten vector paths) digitized, pass C; pass A pending.

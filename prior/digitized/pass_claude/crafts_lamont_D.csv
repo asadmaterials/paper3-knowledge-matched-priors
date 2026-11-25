@@ -1,0 +1,14 @@
+# Tempering decrement D (HRC) against tempering temperature (deg F): Crafts and Lamont, Trans. AIME 172 (1947) 222-243, Fig. 2,
+# as reproduced in Athavale, PhD dissertation, Missouri S&T (2019), Paper I Figs. 4 and 9; "corrected" is the dissertation's own curve.
+# Digitized readings, not the authors' data. Pass C (Claude), 25 Nov 2026. Each curve is two straight segments through three vertices.
+# The corrected curve meets D = 0 at its first vertex extrapolated to the axis (column D0_T_F).
+curve,vertex,T_F,D_HRC,D0_T_F
+original (Paper I Fig. 4),1,295.4,0.688,
+original (Paper I Fig. 4),2,878.6,2.204,
+original (Paper I Fig. 4),3,1297.9,13.497,
+original (Paper I Fig. 9),1,301.1,0.701,
+original (Paper I Fig. 9),2,878.9,2.213,
+original (Paper I Fig. 9),3,1294.7,13.42,
+corrected (Paper I Fig. 9),1,854.1,0.162,850.2
+corrected (Paper I Fig. 9),2,1097.1,10.323,
+corrected (Paper I Fig. 9),3,1217.0,13.548,
