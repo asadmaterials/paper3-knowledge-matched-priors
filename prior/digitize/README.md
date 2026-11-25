@@ -158,3 +158,15 @@ What the data need below pass C's first points at 1300 °F:
 - Si (minimum 0.16%) and Mn (minimum 0.37%): never below pass C's first points (0.13% and 0.11%).
 
 The decision is recorded in DECISION_LOG entry 17.
+
+## Combined values
+
+`combine.py` builds the values the prior uses (DECISION_LOG entry 17):
+
+```
+python -I prior/digitize/combine.py prior/digitized/pass_asad prior/digitized/pass_claude prior/digitized/combined
+```
+
+- **Values:** the mean of the two passes where both cover a content; the single pass where only one does. Column `source` says which (both, A or C), and the two passes' own values are kept beside the mean.
+- **Range of each curve:** from the earlier first point to the later drawn end of the two passes. `ghp1977_figs11-17_combined_ends.csv` lists the first readable point (start of the low-content line) and x_max (where rule H holds).
+- **Dropped readings:** pass A element readings at or below 0 HV are dropped as axis ink: 9 points, on Fig. 14 Cr and Si.
